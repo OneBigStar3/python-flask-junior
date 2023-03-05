@@ -1,0 +1,7 @@
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/README.md
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/checkpointepoch=0.ckpt
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/config.json
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/pytorch_model.bin
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/special_tokens_map.json
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/spiece.model
+https://huggingface.co/Vamsi/T5_Paraphrase_Paws/resolve/main/tokenizer_config.json

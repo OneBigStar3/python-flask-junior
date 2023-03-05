@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+	<title>Best Seller Creator</title>
+</head>
+
+<body>
+	<div class="register">
+		<h1 class="text-white">Cart & Registration</h1>
+		<form class="ajax-form" id="checkout-ajaxform" action="{{ url_for('register', planid=plan.id) }}" method="post"
+			autocomplete="off">
+			<div class="form-group p-2 rounded">
+				<input type="hidden" name="planid" value="{{plan.id}}" />
+				<input type="hidden" name="token" value="{{token}}" />
+				<p class="text-bold text-white">Selected : {{plan.type}} {{plan.validity}} days Membership plan</p>
+				<h4 class="text-white py-3 d-flex justify-content-between">Total Price : ${{plan.price}}</h4>
+			</div>
+			<input class="form-control m-2" type="text" name="username" placeholder="Username" required>
+			<input class="form-control m-2" type="email" name="email" placeholder="Email" value="{{email}}" disabled>
+			<input class="form-control m-2" type="hidden" name="email" placeholder="Email" value="{{email}}"  required>
+			<input class="form-control m-2" type="password" name="password" placeholder="Password" required>
+			<input class="form-control m-2" type="password" name="cpassword" placeholder="Confirm Password" required>
+			<div class="text-left">
+			<input  type="checkbox" name="rememberme" id="remember">
+			<label class="form-check-label text-white" for="remember">Remember Me</label>
+			</div>
+			{{captcha}}
+			<div class="msg text-danger text-center">{{ msg }}</div>
+			{{recaptcha}}
+			<button type="button" class="btn btn-sm btn-block" onclick="ajaxSubmit('checkout-ajaxform');" style="background-color: steelblue;"><img src="{{url_for('static', filename='images/paypal-buy-now-button.png')}}" alt=""></button>
+		</form>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="{{url_for('static', filename='checkout.js')}}"></script>
+</body>
+
+
+</html>
+

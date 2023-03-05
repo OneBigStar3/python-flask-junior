@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,minimum-scale=1">
+   <title>Payment | Best Seller Creation</title>
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+   <style>
+   .product-image img {
+	width: 100%;
+	border: 1px solid #ccc;
+	max-width: 130px;
+	height: 100px;
+	object-fit: cover;
+}
+
+.product-payment-details {
+	box-shadow: 0 0 10px #ccc;
+	float: left;
+	width: 100%;
+}
+
+.product-top-sec {
+	background: #f6f7fb;
+	padding: 20px;
+}
+
+.Invoice {
+	text-align: right;
+}
+
+.Invoice h2 {
+	margin-top: 100px;
+}
+
+.fa.fa-envelope-o {
+	margin-right: 10px;
+}
+
+.mail {
+	margin-top: 10px;
+	display: inline-block;
+	color: #000;
+}
+
+.price-sec {
+	border: 1px solid #ccc;
+	padding: 20px;
+}
+
+.price-total {
+	width: 100%;
+	max-width: 70%;
+	float: right;
+	padding-top: 20px;
+}
+
+.price-total p {
+	width: 50%;
+	float: left;
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0px;
+}
+
+hr {
+	clear: both;
+	border-bottom: 1px solid #ccc;
+}
+
+.due_amount img {
+	width: 100%;
+	padding: 0 15px;
+}
+
+.due_amount {
+	border: 1px solid #ccc;
+	padding: 15px 0px;
+	border-radius: 5px;
+}
+
+.due_amount a {
+	background: #9ea3a7;
+	padding: 10px 10px;
+	display: block;
+	border-radius: 30px;
+	text-align: center;
+	margin: 15px;
+	font-size: 16px;
+	color: #fff;
+}
+
+.due_amount p {
+	width: calc(50% - 15px);
+	float: left;
+	padding-left: 15px;
+	padding-top: 4px;
+}
+
+.due_amount h3 {
+	width: calc(50% - 15px);
+	float: right;
+	text-align: right;
+	margin: 0px;
+	padding-right: 15px;
+}
+
+.payment-page {
+	padding: 30px 0;
+}
+ 
+   </style>
+</head>
+
+<body>
+   <div class="payment-page">
+      <div class="container">
+         <div class="row">
+            <div class="col-sm-{% if invoice.status == 'unpaid' %}9{% else %}12{%endif %}">
+               <div class="product-payment-details">
+                  <div class="product-top-sec">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <div class="product-image">
+                              <img src="{{ url_for('static', filename='images/BSC.png') }}" alt="">
+                              <h3>BestSeller Creator</h3>
+                              <p>109 Fox Valley Ct<br> Longwood, FL 32779</p>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="Invoice">
+                              <p><b>Invoice id: {{invoice.id}}</b></p>
+                              <p>Issued: {{invoice.created_at}}</p>
+                              <h2>${{invoice.price}}</h2>
+                              <p>{{invoice.status}}</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-12" style="background: #ebecee;">
+                     <p><a class="mail" href="mailto:clarence@luxerin.com"><i class="fa fa-envelope-o"
+                              aria-hidden="true"></i> clarence@luxerin.com</a></p>
+                  </div>
+                  <div class="col-sm-12">
+                     <div class="price-sec">
+                        <h3>{{plan.type}} {{plan.validity}} days Membership plan</h3>
+                        <p style="text-align: right;"><b>${{plan.price}}</b></p>
+                        <p>1x ${{plan.price}}</p>
+                     </div>
+                     <div class="price-total">
+                        <p>Subtotal</p>
+                        <p style="text-align: right;">${{plan.price}}</p>
+                        <p><b>Total</b></p>
+                        <p style="text-align: right;"><b>${{plan.price}}</b></p>
+                     </div>
+                  </div>
+                  <div class="col-sm-12">
+                     <h3>Note to customer</h3>
+                     <p>You can always log into the system by clicking the "Customer Login" icon in the upper right
+                        corner of the index page. The login information that you registered with will be active till
+                        time runs out on the account, when it will be automatically disabled. If you forget your
+                        password, there is a reset link on the "Customer Login" popup.</p>
+                     <hr>
+                  </div>
+               </div>
+            </div>
+            {% if invoice.status == 'unpaid' %}
+            <div class="col-sm-3">
+               <div class="due_amount" id="payment-section">
+                  <p>Amount due</p>
+                  <h3>${{plan.price}}</h3>
+                  <hr>
+                  <div id="smart-button-container">
+                     <div style="text-align: center;">
+                        <div id="paypal-button-container"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <script src="https://www.paypal.com/sdk/js?client-id={{paypal_client_id}}&enable-funding=venmo&currency=USD"
+               data-sdk-integration-source="button-factory"></script>
+            <script>
+               function initPayPalButton() {
+                  paypal.Buttons({
+                     style: {
+                        shape: 'pill',
+                        color: 'gold',
+                        layout: 'vertical',
+                        label: 'buynow',
+
+                     },
+
+                     createOrder: function (data, actions) {
+                        return actions.order.create({
+                           purchase_units: [{
+                              "description": "{{plan.validity}} days Membership plan",
+                              "amount": { "currency_code": "USD", "value": {{ plan.price }} },
+                  }]
+               });
+            },
+
+               onApprove: function (data, actions) {
+                  return actions.order.capture().then(function (orderData) {
+
+                     // Full available details
+                     //console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                     //var completedata = JSON.stringify(orderData, null, 2);
+                     // post this data
+                     $.ajax({
+                        url : document.location.href,
+                        type : 'POST',
+                        data : {
+                           'payment_id': orderData['id'],
+                        },
+                        success : function(data){
+                           console.log(data);
+                          // Show a success message within this page, e.g.
+                        const element = document.getElementById('payment-section');
+                        element.innerHTML = '';
+                        element.innerHTML = data.msg;
+
+                       // Or go to another URL:  actions.redirect('thank_you.html');
+
+
+                        }
+                     });
+
+
+                  });
+               },
+
+               onError: function (err) {
+                  console.log(err);
+               }
+         }).render('#paypal-button-container');
+      }
+               initPayPalButton();
+            </script>
+
+            {% endif %}
+
+         </div>
+      </div>
+   </div>
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+</body>
+
+</html>

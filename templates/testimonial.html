@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block title %}Testimonial Submission{% endblock %}
+
+{% block content %}
+<h2>Testimonial Submission Page</h2>
+<p>Welcome back, {{ username }}!<br><br>
+  <b>Explaination of Testimonial Submission</b><br>
+  Here is an opportunity for us both. Hopefully you have achieved a milestone using Bestseller Creator. If you couls supply a short blurb hope the product benefited you that would be great. You're probably well-aware, satisfied customers are vital to the success of any business. I would like to invite you to take a moment to provide some feedback and at the same time give you press. There is no guarantee that your submiision will be chosen for publication, but if chosen the books go through a random rotation.</p>
+<div id="cont">
+  <div class="column left">
+    <form method="post" action="/pythonlogin/testimonial" enctype="multipart/form-data">
+      <label class="label select-box1"><span class="label-desc">Drag and Drop Cover Here</span> </label>
+      <dl>
+      <p>
+        <div class="wrapper">
+          <div class="file-upload">
+            <input type="file" id="formFile" required="required" multiple="multiple" name="file"/>
+            <i class="fa fa-arrow-up" style="font-size:50px"></i>
+          </div>
+        </div>
+      </p>
+      </dl>
+      <p id="file_name" class="text-center"></p>          		
+      <div class="text-center">
+        <input type="submit" class="w-100"/>
+      </div>        	  
+    </form>
+    {% if tester=='yes' %}
+    <div  style="margin: 15px;text-align: center;">
+      <img src="{{ url_for('send_uploaded_file', filename=img) }}" style="height: 250px; width: 170px;">
+    </div>
+    {% endif %}
+  </div>
+  <div class="column right" id="right">
+    <form method="post">
+      <label for="keywords">Heatmap that predicts what viewers will see at first glance - Focusing on lighter color</label><br><br>
+      <div style="text-align:center;">
+        {% if tester=='yes' %}
+        <img src="{{ url_for('send_uploaded_file', filename=heatmap) }}" style="width: 30%;">
+        {% else %}
+        <p>No Results</p>
+        {% endif %}
+      </div><br>
+    </form>
+    <br>
+    <br>
+    <div><p>Similar Covers</p></div>
+    <div style="display:flex;">
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title1}}</p>
+        <p class="ISBN">ISBN: {{isbn1}}</p>
+        <img src="{{ img1 }}" style="width: 50%;">
+      </div>
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title2}}</p>
+        <p class="ISBN">ISBN: {{isbn2}}</p>
+        <img src="{{ img2 }}" style="width: 50%;">
+      </div>
+    </div><br>
+    <div style="display:flex;">
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title3}}</p>
+        <p class="ISBN">ISBN: {{isbn3}}</p>
+        <img src="{{ img3 }}" style="width: 50%;">
+      </div>
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title4}}</p>
+        <p class="ISBN">ISBN: {{isbn4}}</p>
+        <img src="{{ img4 }}" style="width: 50%;">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  document.getElementById('formFile').onchange = function () {
+    var filename = $('#formFile').val();
+    var file = document.getElementById('file_name');
+    file.innerHTML = filename;
+  };
+</script>
+  
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+{% endblock %}

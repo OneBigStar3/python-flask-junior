@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1">
+		<title>Register</title>
+     	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+
+	</head>
+	<body>
+		<div class="register">
+			<h1 class="text-white">Please fill Contact Email</h1>
+			<form class="ajax-form" id="checkout-ajaxform" action="{{ url_for('checkout_page', plan_id=plan.id) }}" method="post" autocomplete="off">
+				<input type="hidden" name="planid" value="{{plan.id}}"/>
+				<input type="hidden" name="token" value={{token}}/>
+				<div class="text-white p-2 m-2 rounded">
+				<p>Selected :  {{plan.type}} {{plan.validity}} days Membership plan</p>
+				<h3 class="">Total Price : ${{plan.price}}</h3>
+				</div>
+				<input type="email" class="form-control p-2 m-2" name="email" placeholder="Email" id="email" required>
+				<div class="msg text-danger text-center">{{ msg }}</div>
+				{{recaptcha}}
+				<button type="button" class="btn btn-primary btn-block" onclick="ajaxSubmit('checkout-ajaxform');">Proceed </button>
+			</form>
+		</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="{{url_for('static', filename='checkout.js')}}"></script>
+	</body>
+</html>

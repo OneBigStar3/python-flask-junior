@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>BestSeller Creator</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/all.css">
+    <link href="/static/bootstrap3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/assets/css/examples.css" rel="stylesheet"/>
+    <link href="/static/assets/css/gsdk.css" rel="stylesheet"/>
+    <link href="/static/assets/css/gsdk-presentation.css" rel="stylesheet"/>
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Grand+Hotel|Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link href="/static/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="/static/assets/css/rotating-card.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='index.css')}}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% if settings['recaptcha']['value'] == 'true': %}
+    <script src='https://www.google.com/recaptcha/api.js?render={{sitekey}}'></script>
+    {% endif %}
+    <script>const cloudfrontAsset = function(imagePath) { return "https://d1qwyayg24w5f4.cloudfront.net/" + imagePath }
+    var json = {"indexpage_metadata":{"list":[{"title":"The Doctor Is In: Dr. Ruth on Love, Life, and Joie de Vivre","book_image":"images/home/amazon-publishing-TheDoctorIsInDrRuthOnLoveLifeAndJoieDeVivre.jpg","author":"Dr. Ruth K. Westheimer, Pierre A. Lehu","testimonial":"Product can see things from a like-minded point of view.","description":"Through intimate and funny stories, Dr. Ruth sheds light on how she’s learned to live a life filled with joie de vivre. And she shows readers how they, too, can learn to deal with tragedy and loss, challenges and success, all while nourishing an intellectual and emotional spark and, above all, having fun!","amazon_product_url":"https://www.amazon.com/Doctor-Ruth-Love-Life-Vivre-ebook/dp/B00PR32G3E"},{"title":"Stay or Go: Dr. Ruth’s Rules for Real Relationships","book_image":"images/home/amazon-publishing-StayOrGoDrRuthRulesForRealRelationships.jpg","author":"Dr. Ruth K. Westheimer, Pierre A. Lehu","":"","testimonial":"Needed this product on the market.","description":"Delving into everything from communicating to financial stresses, parenting pressures to long-distance relationships, Dr. Ruth helps you to understand your romantic expectations—reasonable and unreasonable—what you can do to save a relationship, and how and when you should say goodbye","amazon_product_url":"https://www.amazon.com/Stay-Go-Ruths-Rules-Relationships/dp/1542046718","":"“Ever practical, Dr. Ruth wants to help you figure out whether you have enough of the whole package—love, lust, trust—to make the union worth saving."}],}}</script>
+</head>
+
+<body class="home">
+
+<div id="id02" class="modal">
+   <form class="modal-content animate" style="width: 350px;" action="{{url_for('login')}}" id="ajax-form" method="post">
+      <span onclick="document.getElementById('id02').style.display='none'" class="close"
+         title="Close Modal">×</span>
+      <h3>Login</h3>
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+      <label>
+         <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+      <input type="hidden" name="token" value="{{ token }}">
+      {% if settings['recaptcha']['value'] == 'true': %}
+      <div class="g-recaptcha" data-sitekey="{{sitekey}}" style="margin-bottom:10px;"></div>
+      {% endif %}
+      <button  class="main-btn" type="submit">Login</button>
+      <span class="psw"><a href="{{ url_for('forgotpassword') }}">Forgot Password?</a>
+         <div class="msg">{{ msg }}</div>
+      </span>
+   </form>
+ </div>
+ <div id="id01" class="modal">
+     <form class="modal-content animate" style="width: 350px;" action="{{url_for('contactus')}}" id="ajax-form" method="post">
+         <span onclick="document.getElementById('id01').style.display='none'" class="close"
+             title="Close Modal">×</span>
+         <h3 style="text-align: center;">Contact Us</h3>
+         <label for="name"><b>Name</b></label>
+         <input type="text" placeholder="Enter Name" name="name" required>
+         <label for="email"><b>Email</b></label>
+         <input type="text" placeholder="Enter Email" name="email" required>
+         <label for="subject"><b>Subject</b></label>
+         <input type="text" placeholder="Enter Subject" name="subject" required>
+         <label for="description"><b>Description</b></label>
+         <textarea rows="3" cols="37" id="description" name="description" style="width: 308px; margin-bottom:10px;" required></textarea>
+         <input type="hidden"  name="token" value="{{ token }}">
+         {% if settings['recaptcha']['value'] == 'true': %}
+         <div class="g-recaptcha" data-sitekey="{{sitekey}}" style="margin-bottom:10px;"></div>
+         {% endif %}
+         <button class="main-btn" type="submit">Submit</button>
+     </form>
+ </div>
+
+<nav class="navbar navbar-inverse navbar-transparent navbar-fixed-top" role="navigation">
+    <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button id="menu-toggle" type="button" class="navbar-toggle">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar bar1"></span>
+        <span class="icon-bar bar2"></span>
+        <span class="icon-bar bar3"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('home') }}"><i class="fa-solid fa-book"></i>  BestSeller Creator</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul  class="nav navbar-nav navbar-right">
+            <li>
+               <a onclick="document.getElementById('id02').style.display='block'" style="margin:5px 0">
+                  <img class="member-login" src="{{url_for('static', filename='/images/member_login.png')}}">
+               </a>
+            </li>
+       </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>
+
+<div class="wrapper">
+    <div class="parallax">
+        <div class="parallax-image">
+         <video width="100%" height="100%"  loop autoplay muted>
+            <source src="{{url_for('static', filename='images/book_logo1.mp4')}}" type="video/mp4">
+         </video>
+        </div>
+    </div>
+
+    <div class="main presentation">
+        <div class="section section-gray-gradient section-description">
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-9 col-md-offset-1">
+                       <h2 class="text-center">William Shakespeare asked, "What is in a name?" <br>The Answer - When It Comes to the Marketing of Book Titles, Covers, Keywords and Descriptions - a Whole Lot.<br><br></h2>
+			 <h3 class="text-center"> Our Offer is that of a Unique Artificial Intelligence, Trained to Re-purpose Existing Content and Generate Copy in the Style of the Professional Marketers Who Write the Bestselling Book Descriptions.</h3>
+                   </div>
+               </div>
+                <div class="space-50"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                       <h4>This product uses context-checking when translating a text. The outcomes are as intelligent and bookseller marketing-worthy as possible.
+As component of the solution will certainly additionally get cover contrast a reverse picture search application powered by Advanced expert system algorithms that match your submitted pictures with the items formed color pattern and also various other aspects found in the most effective vendors database.
+Additionally, discover how your description compares to others either by a word-by-word contrast or by it's implied meaning.</h4>                       
+                    </div>
+                    <div class="col-md-5 col-md-offset">
+                        <div class="perspective-cards-container" data-placement="left" data-original-title="View all Cards" aria-describedby="tooltip179774">
+                            <img id="hover_animate_images" class="perspective-img card-img-overhead" src="{{url_for('static', filename='images/1.png')}}" data-xblocker="passed" style="visibility: visible;">
+                        </div>
+                    </div>
+                </div>
+                <div class="space-50"></div>
+            </div>
+        </div>
+    </div>
+    <div class="section section-dark-gray examples">
+       <div class="container">
+         <div class="tim-title">
+            <h2 class="text-center">Custom Tools That Will Open Up Your Mind!
+               <br><small>Here are just 6 examples, of many, of what our solution can do for you.</small>
+            </h2>
+            <br>
+         </div>
+         <div class="row">
+            <div class="col-md-4">               
+               <div class="card-container manual-flip">
+                   <div class="card">
+                       <div class="front">
+                           <div class="cover">
+                               <img src="/static/images/title.png"/>
+                           </div>
+                           <div class="content">
+                               <div class="main">
+                                   <h3 class="name">Title Ranking</h3>                 
+                                   <p class="text-center">How do the words in your title rank against others?</p>
+                               </div>
+                               <div class="footer">
+                                 <button class="btn btn-simple" onclick="rotateCard(this)">
+                                    Flip Card for Explanation <i class="fa fa-mail-forward"></i>
+                                 </button>
+                              </div>
+                           </div>
+                       </div> <!-- end front panel -->
+                       <div class="back">
+                           <div class="content">
+                               <div class="main">
+                                   <h4 class="text-center">Title Ranking</h4>
+                                   <p class="text-center">For title ranking, all the title words results in the Bestseller Creator product are based on either the number of weeks the book was on the best seller checklist, "Full Count for Weeks on List", or a "Consolidated Value for Being On List", for the complete period the title was on the checklist. These titles go all the way back to 2011, and you can select custom comparative dates.</p>
+                               </div>
+                               
+                              <button class="btn btn-simple" onclick="rotateCard(this)">
+                                 Flip Card for Visual <i class="fa fa-mail-forward"></i>
+                              </button>
+                              
+                           </div>
+                       </div> <!-- end back panel -->
+                   </div> <!-- end card -->
+               </div> <!-- end card-container -->               
+            </div>
+            <div class="col-md-4">
+               <div class="card-container manual-flip">
+                   <div class="card">
+                       <div class="front">
+                           <div class="cover">
+                               <img src="/static/images/rewrite.png"/>
+                           </div>
+                           <div class="content">
+                               <div class="main">
+                                   <h3 class="name">Description Rewriter</h3>
+                                   <p class="text-center">How would your book description look if it were written by one of the markerters for the bestsellers?</p>
+                               </div>
+                               <div class="footer">
+                                 <button class="btn btn-simple" onclick="rotateCard(this)">
+                                    Flip Card for Explanation <i class="fa fa-mail-forward"></i>
+                                 </button>
+                              </div>
+                           </div>
+                       </div> <!-- end front panel -->
+                       <div class="back">
+                           <div class="content">
+                               <div class="main">
+                                   <h4 class="text-center">Rewrite Description</h4>
+                                   <p class="text-center">This Custom AI has been train to reuse information from over 90,000 titles and write text in the style of the skilled marketers that create the Bestselling Book Descriptions. You may use this tool not only to rewrite the marketing description for your book, but also for social media, papers, correspondence, and emails.</p>
+                               </div>
+                               
+                              <button class="btn btn-simple" onclick="rotateCard(this)">
+                                 Flip Card for Visual <i class="fa fa-mail-forward"></i>
+                              </button>
+                           
+                           </div>
+                       </div> <!-- end back panel -->
+                   </div> <!-- end card -->
+               </div> <!-- end card-container --> 
+            </div>
+            <div class="col-md-4">
+               <div class="card-container manual-flip">
+                   <div class="card">
+                       <div class="front">
+                           <div class="cover">
+                               <img src="/static/images/covercompare.png"/>
+                           </div>
+                           <div class="content">
+                               <div class="main">
+                                   <h3 class="name">Cover Compare</h3>
+                                   <p class="text-center">What do people see when they look first when they see your cover? What Bestseller Cover looks closest to yours?</p>
+                               </div>
+                               <div class="footer">
+                                 <button class="btn btn-simple" onclick="rotateCard(this)">
+                                    Flip Card for Explanation <i class="fa fa-mail-forward"></i>
+                                 </button>
+                              </div>
+                           </div>
+                       </div> <!-- end front panel -->
+                       <div class="back">
+                           <div class="content">
+                               <div class="main">
+                                   <h4 class="text-center">Cover Compare Description</h4>
+                                   <p class="text-center">Cover Compare runs a similarity check by matching the objects, shapes, color scheme, and other elements. Plus, our data scientists setup a visual heat-map to quickly and accurately simulate how people will see your cover in the first 3-5 seconds. This first glance time period is critical in capturing your reader's interest during their browsing period.</p>
+                               </div>
+                               
+                              <button class="btn btn-simple" onclick="rotateCard(this)">
+                                 Flip Card for Visual <i class="fa fa-mail-forward"></i>
+                              </button>
+                              
+                           </div>
+                       </div> <!-- end back panel -->
+                   </div> <!-- end card -->
+               </div> <!-- end card-container --> 
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-4">               
+               <div class="card-container manual-flip">
+                   <div class="card">
+                       <div class="front">
+                           <div class="cover">
+                               <img src="/static/images/tagging.png"/>
+                           </div>
+                           <div class="content">
+                               <div class="main">
+                                   <h3 class="name">Keywords Page</h3>
+                                   <p class="text-center">Can you summarize, cluster, index, and do information visualization, to name just a few baseds off your description? </p>
+                               </div>
+                               <div class="footer">
+                                 <button class="btn btn-simple" onclick="rotateCard(this)">
+                                    Flip Card for Explanation <i class="fa fa-mail-forward"></i>
+                                 </button>
+                              </div>
+                           </div>
+                       </div> <!-- end front panel -->
+                       <div class="back">
+                           <div class="content">
+                               <div class="main">
+                                   <h4 class="text-center">Keywords Description</h4>
+                                   <p class="text-center">When you are filling out many forms for your book submissions you will undoubtedly come across tagging and keywords. Experimental results carried out on top of twenty datasets show that our methods significantly outperform state-of-the-art methods under a number of collections of different sizes, languages or domains.</p>
+                               </div>
+                               
+                              <button class="btn btn-simple" onclick="rotateCard(this)">
+                                 Flip Card for Visual <i class="fa fa-mail-forward"></i>
+                              </button>
+                              
+                           </div>
+                       </div> <!-- end back panel -->
+                   </div> <!-- end card -->
+               </div> <!-- end card-container -->               
+            </div>
+            <div class="col-md-4">
+               <div class="card-container manual-flip">
+                   <div class="card">
+                       <div class="front">
+                           <div class="cover">
+                               <img src="/static/images/sentiment.png"/>
+                           </div>
+                           <div class="content">
+                               <div class="main">
+                                   <h3 class="name">Sentiment Analysis</h3>
+                                   <p class="text-center">Would people read your description as positive or negative? By percentage, which emotions does it evoke?</p>
+                               </div>
+                               <div class="footer">
+                                 <button class="btn btn-simple" onclick="rotateCard(this)">
+                                    Flip Card for Explanation <i class="fa fa-mail-forward"></i>
+                                 </button>
+                              </div>
+                           </div>
+                       </div> <!-- end front panel -->
+                       <div class="back">
+                           <div class="content">
+                               <div class="main">
+                                   <h4 class="text-center">Sentiment Analysis Description</h4>
+                                   <p class="text-center">Sentiment analysis, otherwise known as opinion mining, works thanks to natural language processing (NLP) and machine learning algorithms, to automatically determine the emotional tone behind online conversations. Sentiment analysis is a  technique used to determine whether data is positive, negative or neutral. </p>
+                               </div>
+                               
+                              <button class="btn btn-simple" onclick="rotateCard(this)">
+                                 Flip Card for Visual <i class="fa fa-mail-forward"></i>
+                              </button>
+                           
+                           </div>
+                       </div> <!-- end back panel -->
+                   </div> <!-- end card -->
+               </div> <!-- end card-container --> 
+            </div>
+            <div class="col-md-4">
+               <div class="card-container manual-flip">
+                   <div class="card">
+                       <div class="front">
+                           <div class="cover">
+                               <img src="/static/images/description.png"/>
+                           </div>
+                           <div class="content">
+                               <div class="main">
+                                   <h3 class="name">Description Compare</h3>
+                                   <p class="text-center">Does your description remind readers of other published books?</p>
+                               </div>
+                               <div class="footer">
+                                 <button class="btn btn-simple" onclick="rotateCard(this)">
+                                    Flip Card for Explanation <i class="fa fa-mail-forward"></i>
+                                 </button>
+                              </div>
+                           </div>
+                       </div> <!-- end front panel -->
+                       <div class="back">
+                           <div class="content">
+                               <div class="main">
+                                   <h4 class="text-center">Description Compare</h4>
+                                   <p class="text-center">Description Compare runs a similarity check by matching your text either by word-to-word or meaning. You can see how your descriptions may be similar to others and have more opportunity to craft your text accordingly.</p>
+                               </div>
+                               
+                              <button class="btn btn-simple" onclick="rotateCard(this)">
+                                 Flip Card for Visual <i class="fa fa-mail-forward"></i>
+                              </button>
+                           
+                           </div>
+                       </div> <!-- end back panel -->
+                   </div> <!-- end card -->
+               </div> <!-- end card-container --> 
+            </div>
+         </div>
+         <div class="space-50"></div>
+       </div>
+    </div>
+	
+	 <div class="main presentation">
+       
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-9 col-md-offset-1">
+                       <h2 class="text-center">A Configurable Web Interface for Ease of Use on Either Desktop or Mobile Devices.</h2>
+                   </div>
+               </div>
+                <div class="space-50"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                       <h4>This is all for your ease of use of this specially created AI that has been taught to repurpose already existing content and to generate copy in the manner of the expert marketers who create the best-selling book descriptions.
+As a component of the solution, you'll also receive Cover Compare, a reverse image search tool powered by cutting-edge AI algorithms that compares uploaded photos to items, color schemes, and other design features in the best sellers database.</h4>                       
+                    </div>
+            
+	   <div class="col-md-5 col-md-offset-2">
+<br>
+<br>
+
+         <video width="310px" height="244px"  loop autoplay muted>
+            <source src="{{url_for('static', filename='images/combine.mp4')}}" type="video/mp4">
+         </video>
+     
+			 
+
+  </div>
+
+                <div class="space-50"></div>
+            </div>
+        </div>
+    </div>
+	
+    <div class="main presentation">
+       <div class="section section-gray-gradient section-description">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-9 col-md-offset-1">
+                    <h2 class="text-center">The Data Libraries Feeding This Program's Artificial Intelligence (AI) Are Updated Weekly.</h2>
+                    <h4 class="text-center">{{last_week}}</h3>
+                 </div>
+             </div>
+             <div class="space-50"></div>
+             <div class="row">
+                 <div class="col-md-6 col-md-offset-1">
+                     <div class="img-container-max" rel="tooltip" title="" data-placement="right" onclick="showModal(this)" data-target="#content" data-original-title="View all Content Areas">
+                         <img src="{{url_for('static', filename='images/all_titles.png')}}" data-xblocker="passed" style="visibility: visible;width: 100%;height: 100%;margin-top: 40px;">
+                     </div>
+                 </div>
+                 <div class="col-md-4 col-md-offset-1">
+                     <h4>Bestseller Creator offers millions of possible combinations of elements before recommending texts that most closely fit your requirements and could help you see new possibilities. You may see the terms that have been used in titles the most since 2011 by just looking at this word cloud. The list of the most popular title words change yearly and it can all be tracked by this custom AI.</h4>
+                 </div>
+             </div>
+             <div class="space-50"></div>
+         </div>
+      </div>
+    </div>      
+    <div class="section section-features-2">
+      <div class="container">
+          <div class="row">
+             <div class="col-md-9 col-md-offset-1">
+                 <h2 class="text-center">How do the words in your title rank against those on the bestseller's list?</h2>
+                 <h5 class="text-center">Enter your title and email in the areas below, and the system will send you it's ranking results based off the bestselling United States titles from 2011 till today.</h5> 
+		 <h3 class="text-center">Only 1 free title ranking request a day.</h3>
+             </div>
+          </div>
+          <section>
+              <div class="row">
+                  <h3 class="section-title">Title Ranking Generator</small></h3>
+                  <p>50 characters maximum<p>
+                     <form method="POST">
+                       <input type="text" name= "title" id="title_rank" style="width:100%;" placeholder="Enter Title Here" value = "" maxlength = "50"><br><br>
+                       <input type="email" name="promo" style="width:100%;" placeholder="Enter Email Address To Receive Result"><br>
+                       <input type="submit" class="submitButton" value="Submit">
+                       <input type="button" class="submitButton" value="Cancel">
+                       <input type="button" class="submitButton" value="Clear"  onclick="document.getElementById('title_rank').value = ''">
+                       {% if settings['recaptcha']['value'] == 'true': %}
+                       <div class="g-recaptcha" data-sitekey="{{sitekey}}"></div>
+                       {% endif %}
+                     </form>
+                    <h4 class="mt-0" style="margin-bottom: 20px">{{ message }}</h4>
+              </div>
+          </section>
+     </div>
+    </div><!-- section -->
+    <div class="section section-features-2">
+        <div class="container">
+            <section class="b-section section--spotlight">
+                <div class="ui container">
+                    <div class="section__wrap">
+                        <h3 class="section__header">Customer Spotlights and Testimonials</h3>
+                        <div class="section__book-wrap" id="js-spotlight-wrap">
+                            <article class="b-book book--medium book--avatar">
+                                <div class="book__wrap book__wrap--medium book__wrap--avatar">
+                                    <figure class="book__image-wrap book__image-wrap--avatar">
+                                        <img alt="The Doctor Is In: Dr. Ruth on Love, Life, and Joie de Vivre" class="book__image book__image--avatar js-book-popover" src="https://d1qwyayg24w5f4.cloudfront.net/images/home/amazon-publishing-TheDoctorIsInDrRuthOnLoveLifeAndJoieDeVivre.jpg">
+                                    </figure>
+                                    <div class="book__detail"><b> Testimonial:</b> <i>"Product can see things from a like-minded point of view."</i>
+                                        <div class="book__avatar-wrap"></div>
+                                        <aside class="b-book-popover">
+                                            <div class="book__wrap book__wrap--medium book__wrap--avatar book__wrap--popover">
+                                                <figure class="book__image-wrap book__image-wrap--avatar">
+                                                    <img alt="The Doctor Is In: Dr. Ruth on Love, Life, and Joie de Vivre" aria-hidden="true" class="book__image book__image--avatar book__image--popover" src="https://d1qwyayg24w5f4.cloudfront.net/images/home/amazon-publishing-TheDoctorIsInDrRuthOnLoveLifeAndJoieDeVivre.jpg">
+                                                </figure>
+                                                <div class="book__detail">
+                                                    <h3 aria-hidden="true" class="book__title book__title--avatar">The Doctor Is In: Dr. Ruth on Love, Life, and Joie de Vivre</h3>
+                                                    <p class="book-popover__desc">Through intimate and funny stories, Dr. Ruth sheds light on how she’s learned to live a life filled with joie de vivre. And she shows readers how they, too, can learn to deal with tragedy and loss, challenges and success, all while nourishing an intellectual and emotional spark and, above all, having fun!</p>
+                                                    <a class="book-popover__link u-link-underline" href="https://www.amazon.com/Doctor-Ruth-Love-Life-Vivre-ebook/dp/B00PR32G3E" target="_blank">View on Amazon</a>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                        <table class="b-book-table">
+                                            <tbody>
+                                                <tr class="book-table__row">
+                                                    <td class="book-table__header">BOOK TITLE</td>
+                                                    <td class="book-table__cell">The Doctor Is In: Dr. Ruth on Love, Life, and Joie de Vivre</td>
+                                                </tr>
+                                                <tr class="book-table__row"></tr>
+                                                <tr class="book-table__row">
+                                                    <td class="book-table__header">AUTHOR</td>
+                                                    <td class="book-table__cell">Dr. Ruth K. Westheimer, Pierre A. Lehu</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="b-book book--medium book--avatar">
+                                <div class="book__wrap book__wrap--medium book__wrap--avatar">
+                                    <figure class="book__image-wrap book__image-wrap--avatar">
+                                        <img alt="Stay or Go: Dr. Ruth’s Rules for Real Relationships" class="book__image book__image--avatar js-book-popover" src="https://d1qwyayg24w5f4.cloudfront.net/images/home/amazon-publishing-StayOrGoDrRuthRulesForRealRelationships.jpg">
+                                    </figure>
+                                    <div class="book__detail"><b> Testimonial:</b> <i>"Needed this product on the market."</i>
+                                        <div class="book__avatar-wrap"></div>
+                                        <aside class="b-book-popover">
+                                            <div class="book__wrap book__wrap--medium book__wrap--avatar book__wrap--popover">
+                                                <figure class="book__image-wrap book__image-wrap--avatar">
+                                                    <img alt="Stay or Go: Dr. Ruth’s Rules for Real Relationships" aria-hidden="true" class="book__image book__image--avatar book__image--popover" src="https://d1qwyayg24w5f4.cloudfront.net/images/home/amazon-publishing-StayOrGoDrRuthRulesForRealRelationships.jpg">
+                                                </figure>
+                                                <div class="book__detail">
+                                                    <h3 aria-hidden="true" class="book__title book__title--avatar">Stay or Go: Dr. Ruth’s Rules for Real Relationships</h3>
+                                                    <p class="book-popover__desc">Delving into everything from communicating to financial stresses, parenting pressures to long-distance relationships, Dr. Ruth helps you to understand your romantic expectations—reasonable and unreasonable—what you can do to save a relationship, and how and when you should say goodbye</p>
+                                                    <a class="book-popover__link u-link-underline" href="https://www.amazon.com/Stay-Go-Ruths-Rules-Relationships/dp/1542046718" target="_blank">View on Amazon</a>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                        <table class="b-book-table">
+                                            <tbody>
+                                                <tr class="book-table__row">
+                                                    <td class="book-table__header">BOOK TITLE</td>
+                                                    <td class="book-table__cell">Stay or Go: Dr. Ruth’s Rules for Real Relationships</td>
+                                                </tr>
+                                                <tr class="book-table__row"></tr>
+                                                <tr class="book-table__row">
+                                                    <td class="book-table__header">AUTHOR</td>
+                                                    <td class="book-table__cell">Dr. Ruth K. Westheimer, Pierre A. Lehu</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="section section-gray">
+            <div class="container">
+               <div class="big-info">
+                    <h3 class="text-center">Pricing</h3>
+               </div>               
+               <div class="row">
+                  {% for plan in planlist %}
+                  <div class="col-md-3">
+                     <div class="card card-price" style="background-color: white;">
+                        <div class="content">
+                           <h6 class="category">{{plan.type}}</h6>
+                           <h1 class="price"><small>$</small>{{plan.price}}</h1>
+                           <ul class="list-unstyled">
+                              <li>
+                                 <i class="fa fa-comments"></i>membership   <b>{{plan.validity}}</b> day
+                              </li>                                        
+                           </ul>
+                        </div>
+                        <div class="footer">
+                           <a href="{{url_for('checkout_page', plan_id=plan.id)}}">
+                              <button type="button" class="btn btn-info btn-round btn-fill btn-block">Buy now!</button>
+                           </a>
+                        </div>
+                     </div> <!-- end card -->
+                  </div>
+                  {% else %}
+                  <div class="col-md-3">
+                     <div class="card card-price" style="background-color: white;">
+                        <div class="content">
+                           <h6 class="category">Standard</h6>
+                              <h1 class="price">
+                                 <small>$</small>49
+                              </h1>
+                              <ul class="list-unstyled">
+                                 <li>
+                                    <i class="fa fa-comments"></i>membership   <b>90</b> day
+                                 </li>                                        
+                              </ul>
+                        </div>
+                        <div class="footer">
+                           <a href="{{url_for('checkout_page', plan_id=plan.id)}}">
+                                 <button type="button" class="btn btn-info btn-round btn-fill btn-block">Buy now!</button>
+                           </a>
+                        </div>
+                     </div> <!-- end card -->
+                  </div>
+                  {% endfor %}
+                 </div> <!-- end row -->
+                    <a class="payment" href="https://www.paypal.com/"><img src="{{url_for('static', filename='images/paypal-credit-cards.png')}}" alt=""></a>
+               </div>
+            </div>
+
+    <footer class="footer">
+        <!-- .footer-black is another class for the footer, for the transparent version, we recommend you to change the url of the image with your favourite image.          -->
+
+        <div class="container">
+            <div class="row">         
+                <center>
+                    <p style="line-height:3.5em;">
+                        <a href="/static/images/terms.html">Terms and Conditions</a>
+                        &nbsp;&nbsp;
+                        
+                        <a href="/static/images/cookie.html">Cookie Policy</a>
+                        &nbsp;&nbsp;
+                        
+                        <a href="/static/images/disclaimer.html">Disclaimer</a>
+                     &nbsp;&nbsp;
+                     <a href="#" onclick="document.getElementById('id01').style.display='block'"> Contact Us</a> 
+                    </p>
+                </center>
+            </div>
+        </div>
+    </footer>
+
+
+</div> <!-- wrapper -->
+</body>
+    <script>window.imprint = 'amazon-publishing'</script>
+    <script src="/static/assets/js/book2.js"></script>
+    <!--  jQuery and Bootstrap core files    -->
+    <script src="/static/assets/js/jquery.js" type="text/javascript"></script>
+    <script src="/static/assets/js/jquery-ui.custom.min.js" type="text/javascript"></script>
+    <script src="/static/bootstrap3/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--  Get Shit Done Kit PRO Core javascript      -->
+    <script src="/static/assets/js/get-shit-done.js"></script>
+    <script type="text/javascript">
+      var modal = document.getElementById('id01');
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                 modal.style.display = "none";
+            }
+        }
+        var modal1 = document.getElementById('id02');
+        window.onclick = function(event) {
+            if (event.target == modal1) {
+               modal1.style.display = "none";
+            }
+        }
+
+        var big_image;
+        $().ready(function(){
+            responsive = $(window).width();
+
+            $(window).on('scroll', gsdk.checkScrollForTransparentNavbar);
+
+            if (responsive >= 768){
+                big_image = $('.parallax-image').find('img');
+
+                $(window).on('scroll',function(){
+                    parallax();
+                });
+            }
+
+        });
+
+       var parallax = function() {
+            var current_scroll = $(this).scrollTop();
+
+            oVal = ($(window).scrollTop() / 3);
+            big_image.css('top',oVal);
+        };
+
+       function rotateCard(btn){
+           var $card = $(btn).closest('.card-container');
+           console.log($card);
+           if($card.hasClass('hover')){
+               $card.removeClass('hover');
+           } else {
+               $card.addClass('hover');
+           }
+       }
+    </script>
+</html>

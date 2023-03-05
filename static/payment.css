@@ -1,0 +1,101 @@
+.product-image img {
+	width: 100%;
+	border: 1px solid #ccc;
+	max-width: 130px;
+	height: 100px;
+	object-fit: cover;
+}
+
+.product-payment-details {
+	box-shadow: 0 0 10px #ccc;
+	float: left;
+	width: 100%;
+}
+
+.product-top-sec {
+	background: #f6f7fb;
+	padding: 20px;
+}
+
+.Invoice {
+	text-align: right;
+}
+
+.Invoice h2 {
+	margin-top: 100px;
+}
+
+.fa.fa-envelope-o {
+	margin-right: 10px;
+}
+
+.mail {
+	margin-top: 10px;
+	display: inline-block;
+	color: #000;
+}
+
+.price-sec {
+	border: 1px solid #ccc;
+	padding: 20px;
+}
+
+.price-total {
+	width: 100%;
+	max-width: 70%;
+	float: right;
+	padding-top: 20px;
+}
+
+.price-total p {
+	width: 50%;
+	float: left;
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0px;
+}
+
+hr {
+	clear: both;
+	border-bottom: 1px solid #ccc;
+}
+
+.due_amount img {
+	width: 100%;
+	padding: 0 15px;
+}
+
+.due_amount {
+	border: 1px solid #ccc;
+	padding: 15px 0px;
+	border-radius: 5px;
+}
+
+.due_amount a {
+	background: #9ea3a7;
+	padding: 10px 10px;
+	display: block;
+	border-radius: 30px;
+	text-align: center;
+	margin: 15px;
+	font-size: 16px;
+	color: #fff;
+}
+
+.due_amount p {
+	width: calc(50% - 15px);
+	float: left;
+	padding-left: 15px;
+	padding-top: 4px;
+}
+
+.due_amount h3 {
+	width: calc(50% - 15px);
+	float: right;
+	text-align: right;
+	margin: 0px;
+	padding-right: 15px;
+}
+
+.payment-page {
+	padding: 30px 0;
+}

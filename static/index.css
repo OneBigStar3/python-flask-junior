@@ -1,0 +1,257 @@
+input[type=text], input[type=password], input[type=email] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+span.psw {
+    display: block;
+}
+.loin-popup img {
+    width: 180px;
+}
+.header {
+    background: #000;
+}
+.logo a {
+    color: #fff !important;
+    font-size: 18px;
+    padding-top: 12px;
+    display: inline-block;
+    padding-left: 10px;
+}
+.row {
+    margin: 0px !important;
+}
+.header-login {
+    text-align: right;
+    font-size: 14px;
+    padding-top: 12px;
+}
+
+.header-login > i:hover, i:focus{
+	text-decoration:underline;
+}
+
+.loin-popup {
+    background: transparent;
+    border: none;
+	padding-right: 10px;
+}
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+  padding-top: 60px;
+}
+form {
+    padding: 20px;
+}
+form button {
+    width: 100%;
+    background: #005596;
+    border: none;
+    padding: 12px 20px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; 
+  border: 1px solid #888;
+  width: 320px;
+}
+form .close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    opacity: 1;
+    background: #005596;
+    border-radius: 50%;
+    padding: 0px 6.2px;
+    text-shadow: none;
+	opacity: 1;
+}
+
+.close:hover,
+.close:focus {
+  opacity: 1 !important;
+  color: #fff !important;  
+}
+
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+.sec-2 {
+    padding: 50px 0;
+    background: #284482;
+    margin-top: -5px;
+}
+.sec-2 img {
+    width: 100%;
+}
+.sec-2 img:hover {
+    transform: scale(1.1);
+    transition: transform .2s;
+}
+.sec-2 h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 40px;
+}
+.sec-2 p {
+    background: #fff;
+    padding: 20px 20px;
+    font-size: 16px;
+    color: #000;
+    margin-top: 30px;
+}
+.sec-3 {
+    padding: 50px 0;
+    background: #fff;
+}
+.sec-3 img {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+}
+
+.sec-3 h2 {
+    text-align: center;
+    color: #000;
+    margin-bottom: 40px;
+}
+.sec-3 p {
+    background: #757374;
+    padding: 20px 20px;
+    font-size: 16px;
+    color: #fff;
+    margin-top: 30px;
+}
+.sec-3 img:hover {
+    transform: rotate(360deg);
+    transition: transform .7s ease-in-out;
+}
+
+.inner {
+  background: #005596;
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+}
+.inner img {
+  width: 100%;
+  height: 40px;
+  object-fit: contain;
+  margin-top: 20px;
+}
+.inner p {
+  font-size: 18px;
+  color: #fff;
+}
+.Pricing {
+    background: #000;
+    padding: 30px 0;
+}
+.Pricing h2 {
+    text-align: center;
+    color: #fff;
+    padding-bottom: 30px;
+}
+.payment img {
+    width: 100%;
+    height: 90px;
+    object-fit: contain;
+    margin-top: 30px;
+}
+
+
+/* Styling For Email Section Buttons */
+
+/* Styling For Email Section Buttons */
+
+.submitButton {
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #007fed;
+    background-position-x: 25%;
+    box-shadow: 0 4px 7px -1px rgb(0 0 0 / 11%), 0 2px 4px -1px rgb(0 0 0 / 7%);
+    border: 0;
+    color: #fff !important;/**/
+    padding: 10px 32px !important;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 10px 8px !important;
+    border-radius: 0.5rem;
+    width: 130px;
+    height: 40px;
+}
+  
+.submitButton:hover{
+    box-shadow:0 3px 5px -1px rgba(0,0,0,.09),0 2px 3px -1px rgba(0,0,0,.07);
+    transform:scale(1.02)
+}
+
+.main-btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    box-shadow: 0 4px 7px -1px rgb(0 0 0 / 11%), 0 2px 4px -1px rgb(0 0 0 / 7%);
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    user-select: none;
+    color: #fff;
+    background-color: #007fed;
+    background-position-x: 25%;
+}
+
+.main-btn:hover{
+    box-shadow:0 3px 5px -1px rgba(0,0,0,.09),0 2px 3px -1px rgba(0,0,0,.07);
+    transform:scale(1.02)
+}
+
+.member-login{
+    width: 200px;
+}
+
+@media screen and (max-width: 500px){
+    .member-login{
+        width: 150px;
+    }
+}
+/* End Of Email Section Buttons Styling */
+

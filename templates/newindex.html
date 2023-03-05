@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="keywords" content="bootstrap">
+   <title>Page</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+   <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+
+<body>
+   <div class="header">
+      <div class="row">
+         <div class="col-md-6">
+            <div class="logo">
+               <a href="">Best Seller Creator</a>
+            </div>
+         </div>
+         <div class="col-md-6">
+            <div class="header-login">
+               <button class="loin-popup" onclick="document.getElementById('id01').style.display='block'"><img
+                     src="{{url_for('static', filename='images/login.png')}}" alt="login"></button>
+            </div>
+            <div id="id01" class="modal">
+               <form class="modal-content animate" action="{{url_for('login')}}" id="ajax-form" method="post">
+                  <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                     title="Close Modal">×</span>
+                  <h3>Login</h3>
+                  <label for="email"><b>Email</b></label>
+                  <input type="text" placeholder="Enter Email" name="email" required>
+                  <label for="password"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password newIndex" name="password" required>
+                  <label>
+                     <input type="checkbox" checked="checked" name="remember"> Remember me
+                  </label>
+                  <input type="hidden" name="token" value="{{ token }}">
+                  {{ recaptcha}}
+                  <button type="submit">Login</button>
+                  <span class="psw"><a href="{{ url_for('forgotpassword') }}">Forgot Password?</a>
+                     <div class="msg">{{ msg }}</div>
+                  </span>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+   <section class="banner-video">
+      <video width="100%" height="100%" loop autoplay muted>
+         <source src="{{url_for('static', filename='images/book_logo.mp4')}}" type="video/mp4">
+      </video>
+   </section>
+   <div class="sec-2">
+      <div class="row">
+         <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h2>
+         <div class="col-md-6">
+            <img id="hover_animate_images" src="#" data-src1="{{url_for('static', filename='images/1.jpg')}}"
+               data-src2="{{url_for('static', filename='images/2.jpg')}}" alt="">
+         </div>
+         <div class="col-md-6">
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+               industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+               scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+               into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+               release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+               software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+         </div>
+      </div>
+   </div>
+   <div class="sec-3">
+      <div class="row">
+         <h2>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h2>
+         <div class="col-md-6">
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+               industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+               scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+               into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+               release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+               software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+         </div>
+         <div class="col-md-6">
+            <img src="{{url_for('static', filename='images/girl_title.png')}}" alt="">
+         </div>
+      </div>
+   </div>
+   <div class="Pricing">
+      <div class="container">
+         <div class="row">
+            <h2>Pricing</h2>
+            {% for plan in planlist %}
+            <div class="col-md-2">
+               <div class="inner">
+                  <p>{{plan.type}} </br>{{plan.validity}} day </br>Membership </br>${{plan.price}}</p>
+                  <a href="{{url_for('checkout_page', plan_id=plan.id)}}"><img src="{{url_for('static', filename='images/buy.png')}}" alt=""></a>
+               </div>
+            </div>
+            {% else %}
+            <div class="col-md-2">
+               <div class="inner">
+                  <p>Individual </br>90 day </br>Membership </br>$45.00</p>
+                  <a href=""><img src="{{url_for('static', filename='images/buy.png')}}" alt=""></a>
+               </div>
+            </div>
+            {% endfor %}
+            <a class="payment" href=""><img src="{{url_for('static', filename='images/paypal-credit-cards.png')}}"
+                  alt=""></a>
+         </div>
+      </div>
+   </div>
+   <script>
+      var modal = document.getElementById('id01');
+      window.onclick = function (event) {
+         if (event.target == modal) {
+            modal.style.display = "none";
+         }
+      }
+   </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}Title Creator{% endblock %}
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/loader.css') }}">
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='assets/js/ajax_2.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h2>Title Creator Page</h2>
+<p>Welcome back, {{ username }}!</p>
+<div class="row" id="cont">
+    <div class="column left">
+        <div class="row" id="spaCyLib">
+            <div class="row">Choose Keyword Library Base</div>
+            <div class="row" style="display:flex;">
+                <div class="column books" id="spaCyLang">
+                    <label for="books">Books</label>
+                    <input type="radio" name="lang" id="bookBt" checked="checked" value="books">
+                </div>
+                <div class="column news">
+                    <label for="news">Blogs, News & Comments</label>
+                    <input type="radio" name="lang" id="newsBt" value="news">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="maxCount">
+            <label class="range-label" for="ngram">Max Words Used in Title</label>
+            <div class="row">
+                <div class="range-wrap">
+                  <input type="range" class="range" id="ngramCount" name="chars" min="0" max="10" value="{{ request.form['chars'] }}">
+                  <output class="bubble"></output>
+                  <p style="float:left;padding:0px;">0</p><p style="float:right;padding:0px;">10</p>
+                </div>
+            </div>
+        </div><br>
+
+        <div class="row" id="duplicateCount">
+            <label class="range-label" for="dupli">Highest Rating For Words Changed.<br>"0" would be all words unchanged</label>
+            <div class="row">
+                <div class="range-wrap">
+                  <input type="range" class="range" id="dupValue" name="change" min="0" max="10" value="{{ request.form['change'] }}">
+                  <output class="bubble"></output>
+                  <p style="float:left;padding:0px;">0.00</p><p style="float:right;padding:0px;">1.00</p>
+                </div>
+            </div>
+        </div><br>
+
+        <div class="row" id="duplicateCount">
+            <label class="range-label" for="ngram">Number Of Return Titles</label>
+            <div class="row">
+                <div class="range-wrap">
+                  <input type="range" class="range" id="ngram" name="returned" min="0" max="10" value="{{ request.form['returned'] }}">
+                  <output class="bubble"></output>    
+                  <p style="float:left;padding:0px;">0</p><p style="float:right;padding:0px;">10</p>
+                </div>
+            </div>
+        </div><br><br>
+
+    </div>
+    <div class="column right" id="right">
+        <h2 class="head2">Title Generator</h2>
+      <label for="keywords">Enter your text in the box below</label>
+      <textarea name="sentence" id="keywords" cols="30" rows="10"></textarea>
+      <input type="submit" class="submitButton" value="Submit" onclick="rewriter_submit()"><input type="reset" value="Cancel" class="cancelButton"><button type="button" class="clearButton" onclick="document.getElementById('keywords').value = ''">Clear</button><input type="button" class="exportButton" value="Export" id="export">
+      <br>
+      <div id="loading" style="display:none;">
+        <h1 class="title">Title Creation</h1>
+        <div class="rainbow-marker-loader"></div>
+    </div>
+      <br>
+      <div><p>Title Creation Results</p></div>
+	<div class="clipboard">
+      <textarea name="results" id="results" cols="30" rows="10"></textarea>
+      <div class="tooltip">
+        <button onclick="myFunction()" onmouseout="outFunc()">
+          <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+          <i class="fas fa-paste"></i>
+          </button>
+      </div>
+      </div>
+    </div>
+  </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="{{ url_for('static', filename='style.js') }}"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}

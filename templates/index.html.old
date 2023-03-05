@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="keywords" content="bootstrap">
+      <title>BestSeller Creator</title>
+	   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.2/css/all.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<script src="{{ url_for('static', filename='script.js') }}"></script>
+      {% if settings['recaptcha']['value'] == 'true': %}
+		<script src='https://www.google.com/recaptcha/api.js?render={{sitekey}}'></script>
+		{% endif %}
+   </head>
+   <body>
+   <div class="header">
+         <div class="row" style="display:flex;">
+            <div class="col-md-6" style="flex:1;">
+               <div class="logo">
+				      <a href="{{ url_for('home') }}"><i class="fa-solid fa-book"></i> BestSeller Creator</a>
+               </div>
+            </div>
+            <div class="col-md-6" style="margin-right:8px">
+            	<div class="header-login">
+            		
+		             <i class="fa-solid fa-door-open" onclick="document.getElementById('id02').style.display='block'" style="color: white;margin-left: 5px;"> Members Only</i>		             
+               </div>
+               <div id="id02" class="modal">
+                  <form class="modal-content animate" style="width: 350px;" action="{{url_for('login')}}" id="ajax-form" method="post">
+                     <span onclick="document.getElementById('id02').style.display='none'" class="close"
+                        title="Close Modal">×</span>
+                     <h3>Login</h3>
+                     <label for="email"><b>Email</b></label>
+                     <input type="text" placeholder="Enter Email" name="email" required>
+                     <label for="password"><b>Password</b></label>
+                     <input type="password" placeholder="Enter Password" name="password" required>
+                     <label>
+                        <input type="checkbox" checked="checked" name="remember"> Remember me
+                     </label>
+                     <input type="hidden" name="token" value="{{ token }}">
+                     {% if settings['recaptcha']['value'] == 'true': %}
+                     <div class="g-recaptcha" data-sitekey="{{sitekey}}" style="margin-bottom:10px;"></div>
+                     {% endif %}
+                     <button  class="main-btn" type="submit">Login</button>
+                     <span class="psw"><a href="{{ url_for('forgotpassword') }}">Forgot Password?</a>
+                        <div class="msg">{{ msg }}</div>
+                     </span>
+                  </form>
+               </div>
+               <div id="id01" class="modal">
+                  <form class="modal-content animate" style="width: 350px;" action="{{url_for('contactus')}}" id="ajax-form" method="post">
+                     <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                        title="Close Modal">×</span>
+                     <h3 style="text-align: center;">Contact Us</h3>
+                     <label for="name"><b>Name</b></label>
+                     <input type="text" placeholder="Enter Name" name="name" required>
+                     <label for="email"><b>Email</b></label>
+                     <input type="text" placeholder="Enter Email" name="email" required>
+                     <label for="subject"><b>Subject</b></label>
+                     <input type="text" placeholder="Enter Subject" name="subject" required>
+                     <label for="description"><b>Description</b></label>
+                     <textarea rows="3" cols="37" id="description" name="description" style="width: 308px; margin-bottom:10px;" required></textarea>
+                     <input type="hidden"  name="token" value="{{ token }}">
+                     {% if settings['recaptcha']['value'] == 'true': %}
+                     <div class="g-recaptcha" data-sitekey="{{sitekey}}" style="margin-bottom:10px;"></div>
+                     {% endif %}
+                     <!--<div style="display: flex;align-items: center; padding: 2px;">
+                     	<div class="col-md-6">
+                     		<div class="msg">{{ msg }}</div>
+                     	</div>
+                     	<div class="col-md-6">-->
+                     		<button class="main-btn" type="submit">Submit</button>
+                     	<!--</div>-->
+               		</div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+       <section class="banner-video">
+         <video width="100%" height="100%"  loop autoplay muted>
+		 <source src="{{url_for('static', filename='images/book_logo1.mp4')}}" type="video/mp4">
+         </video>
+      </section>
+      <div class="sec-2">
+         <div class="row">
+            <h2>A Custom Artificial Intelligence Trained to Re-purpose Existing Content and Generate Copy in the Style of the Professional Marketers who Write the Bestselling Book Descriptions.</h2>
+            <div class="col-md-6">
+		    <img id="hover_animate_images" src="#" data-src1="{{url_for('static', filename='images/1.png')}}" data-src2="{{url_for('static', filename='images/2.png')}}" alt="">
+            </div>
+            <div class="col-md-6">
+               <p>A Custom Artificial Intelligence Trained to Re-purpose Existing Content and Generate Copy in the Style of the Professional Marketers who Write the Bestselling Book Descriptions. <br>As part of the solution will also get cover compare a reverse image search application powered by Advanced artificial intelligence algorithms that match your submitted images with the objects shaped color schemes and other elements found in the best sellers database.</p>
+            </div>
+         </div>
+      </div>
+      <div class="sec-3">
+         <div class="row">
+            <h2  style="text-align:center;">The Data Libraries Feeding This Program's Artificial Intelligence (AI) Are Updated Weekly.</h2>
+<h3 style="text-align:center;">{{last_week}}</h3>
+            <div class="col-md-6">
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+            <div class="col-md-6">
+		    <img src="{{url_for('static', filename='images/all_titles.png')}}" alt="">
+            </div>
+         </div>
+      </div>
+     <div class="row" style="background-color: #e0e0e0;">
+         <section style="margin-left:15%;margin-right:15%;">
+            <div class="row" style="text-align:center;font-size:30px;">How do the words in your title rank against those of the recent top seller's?</div>
+            <p style="text-align:center;">Enter your title and email in the fields below, and the system will send you it's ranking based off the top selling US titles for 2016 till now.</p>
+            <div class="row" style="margin-left:10%;margin-right:10%;">
+            <h3>Title Ranking Generator</h3>
+            <p>40 characters maximum<p>
+               <form method="POST">
+                 <input type="text" name= "title" id="title_rank" style="width:100%;" placeholder="Enter Text Here"><br><br>
+                 <input type="email" name="promo" style="width:100%;" placeholder="Enter Email Address To Receive Result"><br>
+                 <input type="submit" class="submitButton" value="Submit">
+                 <input type="button" class="submitButton" value="Cancel">
+                 <input type="button" class="submitButton" value="Clear"  onclick="document.getElementById('title_rank').value = ''">
+                 {% if settings['recaptcha']['value'] == 'true': %}
+                 <div class="g-recaptcha" data-sitekey="{{sitekey}}"></div>
+                 {% endif %}
+               </form>
+         	  <h4 class="mt-0" style="margin-bottom: 20px">{{ message }}</h4>
+            </div>
+         </section>
+      </div>
+      <div class="Pricing">
+         <div class="container">
+            <div class="row">
+            <h2>Pricing</h2>
+            {% for plan in planlist %}
+            <div class="col-md-3">
+               <div class="inner">
+                  <p>{{plan.type}} </br>{{plan.validity}} day </br>Membership </br>${{plan.price}}</p>
+                  <a href="{{url_for('checkout_page', plan_id=plan.id)}}"><img src="{{url_for('static', filename='images/buy.png')}}" alt=""></a>
+               </div>
+            </div>
+            {% else %}
+            <div class="col-md-3">
+               <div class="inner">
+                  <p>Individual </br>90 day </br>Membership </br>$45.00</p>
+                  <a href=""><img src="{{url_for('static', filename='images/buy.png')}}" alt=""></a>
+               </div>
+            </div>
+            {% endfor %}
+	       <a class="payment" href=""><img src="{{url_for('static', filename='images/paypal-credit-cards.png')}}" alt=""></a>
+            </div>
+         </div>
+      </div>
+      <script>
+         var modal = document.getElementById('id01');
+         window.onclick = function(event) {
+             if (event.target == modal) {
+                 modal.style.display = "none";
+             }
+         }
+         var modal1 = document.getElementById('id02');
+         window.onclick = function(event) {
+             if (event.target == modal1) {
+                 modal1.style.display = "none";
+             }
+         }
+      </script>
+
+	  <div class="row" style="background-color: #bababa;">
+         <div class="row">
+		 <center>
+		<p style="line-height:3.5em;">
+            <a href="/static/images/terms.html">Terms and Conditions</a>
+			&nbsp;&nbsp;
+			
+			<a href="/static/images/cookie.html">Cookie Policy</a>
+			&nbsp;&nbsp;
+			
+			<a href="/static/images/disclaimer.html">Disclaimer</a>
+         &nbsp;&nbsp;
+         <a onclick="document.getElementById('id01').style.display='block'"> Contact Us</i>	
+		</p>
+			</center>
+         </div>
+      </div> 
+
+
+   </body>
+</html>
+

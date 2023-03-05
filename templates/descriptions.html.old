@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}Description Compare{% endblock %}
+
+{% block style %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='assets/js/ajax_2.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h2>Description Compare Page</h2>
+<p>Welcome back, {{ username }}!<br>
+  <br>
+  <b>Explaination of Description Compare</b><br>
+  Description Compare contains a heat map that can simulate how people will see your cover in their first glance.  The lighter the color, the greater the area of interest. You will also receive results of similar covers from top selling books, with their ISBN numbers. The artificial intelligence works by doing image identification, color search and optical recognition in the reverse lookup.
+</p>
+
+<div id="cont">
+  <div class="column left">
+    <div class="select-box">
+      <label for="select-box1" class="label select-box1"><span class="label-desc">Enter your Description</span> </label>
+      <span class="dropdown-el" id="select-algo">
+        <input type="radio" name="algorithm" value="0" checked="checked" id="base" required="required">
+        <label for="base" style="padding: 5px;">Select Algorithm:</label>
+        <input type="radio" name="algorithm" value="1" {% if request.form.get('algorithm') == '1' %} checked="checked" {% endif %}  id="txtBlob">
+        <label for="txtBlob" style="padding: 5px;">Compare by words</label>
+        <input type="radio" name="algorithm" value="2" {% if request.form.get('algorithm') == '2' %} checked="checked" {% endif %}  id="vader">
+        <label for="vader" style="padding: 5px;">Compare by Sentence meaning</label>
+      </span>
+    </div><br>
+    <textarea name="n_samples" cols="30" rows="10" maxlength="256"  style="width: 100%;">{{txt}}</textarea>
+    <input type="submit" class="left-submit" value="Submit">
+    <input type="submit" class="left-submit" value="Cancel">
+    <div  id="maxCount"></div>
+  </div><br>
+  <div class="column right" id="right">
+    <div><b>Similar Description</b></div><br>
+    <!-- <div style="display:flex;">
+      <div class="eachbook" style="text-align: left;">
+        <p class="booklabel">Title: {{title_1}}</p>
+        <p class="ISBN">ISBN: {{isbn_1}}</p>
+        <p class="description">Description: {{description_1|safe}}</p>
+        <p class="percentage">Description Similar Percentage: {{percentage_2}}</p>
+      </div>
+    </div><br>
+    <div style="display:flex;">
+      <div class="eachbook" style="text-align: left;">
+        <p class="booklabel">Title: {{title_2}}</p>
+        <p class="ISBN">ISBN: {{isbn_2}}</p>
+        <p class="description">Description: {{description_2|safe}}</p>
+        <p class="percentage">Description Similar Percentage: {{percentage_2}}</p>
+      </div>
+    </div><br>
+    <div style="display:flex;">
+      <div class="eachbook" style="text-align: left;">
+        <p class="booklabel">Title: {{title_3}}</p>
+        <p class="ISBN">ISBN: {{isbn_3}}</p>
+        <p class="description">Description: {{description_3|safe}}</p>
+        <p class="percentage">Description Similar Percentage: {{percentage_3}}</p>
+      </div>
+    </div><br>
+    <div style="display:flex;">
+      <div class="eachbook" style="text-align: left;">
+        <p class="booklabel">Title: {{title_4}}</p>
+        <p class="ISBN">ISBN: {{isbn_4}}</p>
+        <p class="description">Description: {{description_4|safe}}</p>
+        <p class="percentage">Description Similar Percentage: {{percentage_4}}</p>
+      </div>
+    </div> -->
+    <div  id="semResults"><div >
+  </div><br><br>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}

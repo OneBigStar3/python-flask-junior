@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}Cover Compare{% endblock %}
+
+{% block content %}
+  {{ dropzone.load_css() }}
+  {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
+<h2>Cover Compare Page</h2>
+<p>Welcome back, {{ username }}!<br><br>
+<b>Explaination of Cover Compare</b><br>
+Cover Compare contains a heat map that can simulate how people will see your cover in their first glance.  The lighter the color, the greater the area of interest. You will also receive results of similar covers from top selling books, with their ISBN numbers. The artificial intelligence works by doing image identification, color search and optical recognition in the reverse lookup.
+</p>
+  <div  id="cont">
+    <div class="column left">
+        {{ dropzone.create(action='covercompare') }}
+        {{ dropzone.load_js() }}
+        {{ dropzone.config() }}
+        {{ dropzone.config(redirect_url=url_for('covercompare')) }}
+	{% if tester == 'tester' %}
+	<img src="{{ url_for('static', filename=img) }}" style="width: 100%;" alt="no picture">
+	{% else %}
+        <img src="{{ url_for('static', filename='HeatMap.png') }}" style="width: 100%;" alt="no picture">
+	{% endif %}
+	<p>{{ tester }}</p>
+	 <form method="post">
+    </div>
+    <div class="column right" id="right">
+      <label for="keywords">Heatmap that predicts what viewers will see at first glance - Focusing on lighter color</label><br><br>
+      <div  style="text-align:center;">
+        <img src="{{ url_for('static', filename='HeatMap.png') }}" style="width: 30%;">
+        <img src="{{ url_for('static', filename='Graph.png') }}" style="width: 55%;">
+      </div><br>
+      <!---<input type="submit" class="submitButton" value="Submit"><input type="button" value="Cancel" class="cancelButton"><button class="clearButton" onclick="document.getElementById('keywords').value = ''">Clear</button><input type="button" class="exportButton" value="Export" id="export">-->
+      </form>
+      <br>
+      <br>
+      <div><p>Similar Covers</p></div>
+      <div  style="display:flex;">
+              <div class="eachbook" style="min-width:50%; text-align: center;">
+                <p class="booklabel">I GOT THIS</p>
+                <p class="ISBN">9780062677310</p>
+                <img src="{{ url_for('static', filename='Book1.png') }}" style="width: 50%;">
+              </div>
+              <div class="eachbook" style="min-width:50%; text-align: center;">
+                <p class="booklabel">THE INVENTION OF NATURE</p>
+                <p class="ISBN">9780385350662</p>
+                <img src="{{ url_for('static', filename='Book2.png') }}" style="width: 50%;">
+              </div>
+      </div><br>
+      <div  style="display:flex;">
+          <div class="eachbook" style="min-width:50%; text-align: center;">
+            <p class="booklabel">THE UNIVERSE HAS YOUR BACK</p>
+            <p class="ISBN">9781401946548</p>
+            <img src="{{ url_for('static', filename='Book3.png') }}" style="width: 50%;">
+          </div>
+          <div class="eachbook" style="min-width:50%; text-align: center;">
+            <p class="booklabel">THIRTEEN REASON WHY</p>
+            <p class="ISBN">9781595141880</p>
+            <img src="{{ url_for('static', filename='Book4.png') }}" style="width: 50%;">
+          </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="{{ url_for('static', filename='style.js') }}"></script>
+    
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+
+{% endblock %}

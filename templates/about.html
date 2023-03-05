@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<h2>About</h2>
+<div class="content-block">
+
+    <p>You are currently using <b>Version 1.0.0</b> of BestSeller Creator.
+
+	<p>Contact Us. <a class="link1" onclick="document.getElementById('id01').style.display='block'">here</a>.</p>
+    <div id="id01" class="modal">
+    	<form class="modal-content animate" style="width: 350px;" action="{{url_for('contactus')}}" method="post">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+            <h3 style="text-align: center; font-weight: 500;">Contact Us</h3>
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name" required>
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+            <label for="subject"><b>Subject</b></label>
+            <input type="text" placeholder="Enter Subject" name="subject" required>
+            <label for="description"><b>Description</b></label>
+            <textarea rows="3" cols="37" id="description" name="description" style="width: 308px; margin-bottom:10px;" required></textarea>
+            <button class="main-btn" type="submit">Submit</button>
+    	</form>
+ 	</div>
+ 
+</div>
+<script>
+ var modal = document.getElementById('id01');
+ window.onclick = function(event) {
+     if (event.target == modal) {
+         modal.style.display = "none";
+     }
+ }
+</script>
+</div>
+{% endblock %}

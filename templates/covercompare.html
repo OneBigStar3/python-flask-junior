@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block title %}Cover Compare{% endblock %}
+
+{% block content %}
+<h2>Cover Compare Page</h2>
+<p>Welcome back, {{ username }}!<br><br>
+  <b>Explaination of Cover Compare</b><br>
+  Cover Compare contains a heat map that can simulate how people will see your cover in their first glance.  The lighter the color, the greater the area of interest. You will also receive results of similar covers from top selling books, with their ISBN numbers. The artificial intelligence works by doing image identification, color search and optical recognition in the reverse lookup.
+</p>
+<div id="cont">
+  <div class="column left">
+    <form method="post" action="/pythonlogin/covercompare" enctype="multipart/form-data">
+      <label class="label select-box1"><span class="label-desc">Drag and Drop Cover Here</span> </label>
+      <dl>
+      <p>
+        <div class="wrapper">
+          <div class="file-upload">
+            <input type="file" id="formFile" required="required" multiple="multiple" name="file"/>
+            <i class="fa fa-arrow-up" style="font-size:50px"></i>
+          </div>
+        </div>
+      </p>
+      </dl>
+      <p id="file_name" class="text-center"></p>          		
+      <div class="text-center">
+        <input type="submit" class="w-100"/>
+      </div>        	  
+    </form>
+    {% if tester=='yes' %}
+    <div  style="margin: 15px;text-align: center;">
+      <img src="{{ url_for('send_uploaded_file', filename=img) }}" style="height: 250px; width: 170px;">
+    </div>
+    {% endif %}
+  </div>
+  <div class="column right" id="right">
+    <form method="post">
+      <label for="keywords">Heatmap that predicts what viewers will see at first glance - Focusing on lighter color</label><br><br>
+      <div style="text-align:center;">
+        {% if tester=='yes' %}
+        <img src="{{ url_for('send_uploaded_file', filename=heatmap) }}" style="width: 30%;">
+        {% else %}
+        <p>No Results</p>
+        {% endif %}
+      </div><br>
+    </form>
+    <br>
+    <br>
+    <div><p>Similar Covers</p></div>
+    <div style="display:flex;">
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title1}}</p>
+        <p class="ISBN">ISBN: {{isbn1}}</p>
+        <img src="{{ img1 }}" style="width: 50%;">
+      </div>
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title2}}</p>
+        <p class="ISBN">ISBN: {{isbn2}}</p>
+        <img src="{{ img2 }}" style="width: 50%;">
+      </div>
+    </div><br>
+    <div style="display:flex;">
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title3}}</p>
+        <p class="ISBN">ISBN: {{isbn3}}</p>
+        <img src="{{ img3 }}" style="width: 50%;">
+      </div>
+      <div class="eachbook" style="min-width:50%; text-align: center;">
+        <p class="booklabel">TITLE: {{title4}}</p>
+        <p class="ISBN">ISBN: {{isbn4}}</p>
+        <img src="{{ img4 }}" style="width: 50%;">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  document.getElementById('formFile').onchange = function () {
+    var filename = $('#formFile').val();
+    var file = document.getElementById('file_name');
+    file.innerHTML = filename;
+  };
+</script>
+  
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+{% endblock %}

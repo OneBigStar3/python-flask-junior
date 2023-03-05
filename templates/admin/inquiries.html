@@ -1,0 +1,130 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}Inquiries{% endblock %}
+
+{% block content %}
+
+<h2>Inquiries</h2>
+
+<form action="" method="post">
+  <div class="content-header links">
+      <div class="text-center">
+        <input type="submit" name="Submit" class="blue-btn mt-4 mb-0" value="Submit"></input>
+      </div>
+      
+      <div class="search">
+          <label for="search">
+              <input id="search" type="text" name="search" placeholder="Search username or email..." value="{{ search }}" class="responsive-width-100">
+              <i class="fas fa-search"></i>
+          </label>
+      </div>
+  </div>
+
+  <div class="content-block">
+      <div class="table">
+           <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Descrition</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Unread Email</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Current Client</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if not inquiries: %}
+                    <tr>
+                        <td colspan="8" style="text-align:center;">There are no Inquiries</td>
+                    </tr>
+                    {% endif %}
+                    {% for inquiry in inquiries: %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ inquiry['username'] }}</h6>
+                            <p class="text-xs text-secondary mb-0">{{ inquiry['email'] }}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ inquiry['subject'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{ inquiry['description'] }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <div class="form-check form-switch" style="padding-left: 1.5em;">                          
+                          {% if inquiry['unread_email']: %}
+                            <input class="form-check-input ms-auto" name="{{inquiry['id']}}"type="checkbox" id="flexSwitchCheckDefault" checked>
+                            <span class="badge badge-sm bg-gradient-secondary" style="text-transform: initial;">Unread</span>
+                          {% else: %}  
+                            <input class="form-check-input ms-auto" name="{{inquiry['id']}}" type="checkbox" id="flexSwitchCheckDefault">
+                            <span class="badge badge-sm  bg-gradient-success" style="text-transform: initial;">Read</span>
+                          {% endif %}
+                      </div>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        {% if inquiry['current_client']: %}
+                          <span class="badge badge-sm bg-gradient-success">yes</span>
+                        {% else: %}  
+                          <span class="badge badge-sm bg-gradient-secondary">no</span>
+                        {% endif %}
+                      </td>
+                      <td class="align-middle text-center">
+                        <!-- <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          Edit
+                        </a>-->
+                        <!-- <a href="{{ url_for('admin_inquiries') }}/{{ inquiry['id'] }}" class="text-secondary font-weight-bold text-xs" 
+                            data-toggle="tooltip" data-original-title="Edit user">Edit</a> -->
+                        <a href="{{ url_for('admin_delete_inquiries') }}/{{ inquiry['id'] }}" class="text-danger text-gradient font-weight-bold text-xs" 
+                            onclick="return confirm('Are you sure you want to delete this inquiry?')"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+      </div>
+  </div>
+
+  <div class="pagination">
+      {% if page > 1: %}
+      <a href="{{ url }}/{{ order }}/{{ order_by }}/{{ page-1 }}">Prev</a>
+      {% endif %}
+      <span>Page {{ page }} of {{ 1 if math.ceil(inquiries_total/results_per_page) == 0 else math.ceil(inquiries_total/results_per_page) }}</span>
+      {% if page * results_per_page < inquiries_total: %}
+      <a href="{{ url }}/{{ order }}/{{ order_by }}/{{ page+1 }}">Next</a>
+      {% endif %}
+  </div>
+</form>
+
+<script>
+document.querySelector(".filters-form").onsubmit = event => {
+    event.preventDefault();
+    let url = "{{ url_for('admin_inquiries') }}/n0/" + (document.querySelector("input[name='search']").value ? document.querySelector("input[name='search']").value : 'n0') + "/";
+    if (document.querySelector("#status_active").checked) {
+        url += document.querySelector("#status_active").value;
+    } else if (document.querySelector("#status_inactive").checked) {
+        url += document.querySelector("#status_inactive").value;
+    } else {
+        url += "n0";
+    }
+    
+    url += "/{{ order if order else 'n0' }}/{{ order_by if order_by else 'n0' }}/1";
+    window.location.href = url;
+};
+
+document.querySelectorAll("input[type='checkbox']").forEach(checkbox => {
+    checkbox.onclick = () => {
+        checkbox.value = checkbox.checked ? 'true' : 'false';
+    };
+});
+</script>
+
+{% endblock %}

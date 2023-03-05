@@ -1,0 +1,85 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}Description Compare{% endblock %}
+
+{% block content %}
+<h2>Description Compare Page</h2>
+<p>Welcome back, {{ username }}!<br>
+  <br>
+  <b>Explaination of Description Compare</b><br>
+  Description Compare contains a heat map that can simulate how people will see your cover in their first glance.  The lighter the color, the greater the area of interest. You will also receive results of similar covers from top selling books, with their ISBN numbers. The artificial intelligence works by doing image identification, color search and optical recognition in the reverse lookup.
+</p>
+
+<div  id="cont">
+  <div class="column left">
+    <form method="post">
+      <div class="select-box" id="spaCyLib">
+      <label for="select-box1" class="label select-box1">
+        <span class="label-desc">Choose Similarity Check</span> 
+      </label>
+      <span class="dropdown-el" id="select-boc">
+        <input type="radio" name="lang" value="base" checked="checked" id="base" required="required">
+        <label for="base" style="padding: 5px;">Please select Comparison Type</label>
+        <input type="radio" name="lang" value="books" {% if request.form.get('lang') == 'similarity check by whole sentence means' %} checked="checked" {% endif %}   id="bookBt">
+        <label for="bookBt" style="padding: 5px;">similarity check by whole sentence means</label>
+        <input type="radio" name="lang" value="news" {% if request.form.get('lang') == 'news' %} checked="checked" {% endif %}  id="newsBt">
+        <label for="newsBt" style="padding: 5px;">similar check by sentence words</label>
+      </span>
+    </div><br>
+	  
+        <label for="select-box1" class="label select-box1"><span class="label-desc">Enter your Description</span> </label>
+      </div>
+      <textarea name="n_samples" cols="30" rows="10" style="width: 100%;"></textarea>
+      <input type="submit" class="left-submit" value="Submit">
+      <input type="submit" class="left-submit" value="Cancel">
+      <div  id="maxCount"></div>
+      </div>
+      <br>        
+      <div class="column right" id="right">
+        <div><b>Similar Description</b></div><br>
+        <div style="display:flex;">
+          <div class="eachbook" style="text-align: left;">
+            <p class="booklabel">Title:</p>
+            <p class="ISBN">ISBN: </p>
+            <p class="description">Description:</p>
+            <p class="percentage">Description Similar Percentage:</p>
+          </div>          
+        </div><br>
+		 <div style="display:flex;">
+          <div class="eachbook" style="text-align: left;">
+            <p class="booklabel">Title:</p>
+            <p class="ISBN">ISBN: </p>
+            <p class="description">Description:</p>
+            <p class="percentage">Description Similar Percentage:</p>
+          </div>          
+        </div><br>
+        <div style="display:flex;">
+          <div class="eachbook" style="text-align: left;">
+            <p class="booklabel">Title:</p>
+            <p class="ISBN">ISBN: </p>
+            <p class="description">Description:</p>
+            <p class="percentage">Description Similar Percentage:</p>
+          </div>          
+        </div><br>
+        <div style="display:flex;">
+          <div class="eachbook" style="text-align: left;">
+            <p class="booklabel">Title:</p>
+            <p class="ISBN">ISBN: </p>
+            <p class="description">Description:</p>
+            <p class="percentage">Description Similar Percentage:</p>
+          </div>          
+        </div>
+      </div>
+      </form>
+      <br>
+      <br>
+      <div  id="semResults"><div >
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+Path of files  = 	/home/ubuntu/site
+
+the main.py file that the app runs off is in Home/ubuntu/site/main.py
+
+currently to run app manually
+#sudo apt-get install python3-venv
+#python3 -m venv venv
+#source venv/bin/activate
+#pip3 install flask
+#python -m pip install python-dotenv
+#sudo apt-get install libmysqlclient-dev
+#pip3 install wheel
+#sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
+#pip install flask-mysql
+#pip3 install flask-mysqldb
+#pip3 install Flask-Mail
+export FLASK_APP=main.py
+export FLASK_ENV=development
+flask run --host=0.0.0.0 --port=8080
+
+
+Added a crontab to run the server on reboot. Which makes the app run on every reboot
+#Crontab -e
+
+“ @reboot screen -dmS "flsk-running" bash -c "trap 'echo gotsigint' INT; 
+cd /home/ubuntu/site ; 
+pip3 install flask ; 
+python -m pip install python-dotenv ; 
+pip3 install wheel ; 
+pip install flask-mysql ; 
+pip3 install flask-mysqldb ; 
+pip3 install Flask-Mail ; 
+source venv/bin/activate ; e
+xport FLASK_APP=main.py ; 
+export FLASK_ENV=development ; 
+flask run --host=0.0.0.0 --port=8080 ;  
+bash"  “
+
+#Crontab -l (to show running crontab)
+
+The above crontab wich run on every reboot in installs and update each modules and runs the flask run command which turns up the flask web app . which is redirected by apache webserver

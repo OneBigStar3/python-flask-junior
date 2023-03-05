@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS pagevisit (
+    `uid` VARCHAR(50) NOT NULL ,
+    `url` VARCHAR(300) NOT NULL,
+    `is_login` BOOLEAN DEFAULT false,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    PRIMARY KEY (`uid`)
+    
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

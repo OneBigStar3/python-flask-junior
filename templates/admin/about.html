@@ -1,0 +1,47 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<h2>About</h2>
+
+<div class="content-block">
+
+    <p>The secure login and registration system is a robust, fast, and innovative project developed by <a class="link1" href="https://codeshack.io" target="_blank">CodeShack</a>.</p>
+
+    <p>You are currently using <b>Version 1.2.0</b>. For updates and support, click <a class="link1" href="https://codeshack.io/package/python/advanced-secure-login-registration-system/" target="_blank">here</a>.</p>
+
+    <p>Contact Us. <a class="link1" onclick="document.getElementById('id01').style.display='block'">here</a>.</p>
+    <div id="id01" class="modal">
+      <form class="modal-content animate modal-font" style="width: 350px;" action="{{url_for('contactus')}}" id="ajax-form" method="post">
+         <span onclick="document.getElementById('id01').style.display='none'" class="close"
+            title="Close Modal">×</span>
+         <h3 style="text-align: center;">Contact Us</h3>
+         <label for="name"><b>Name</b></label>
+         <input type="text" placeholder="Enter Name" name="name" required>
+         <label for="email"><b>Email</b></label>
+         <input type="text" placeholder="Enter Email" name="email" required>
+         <label for="subject"><b>Subject</b></label>
+         <input type="text" placeholder="Enter Subject" name="subject" required>
+         <label for="description"><b>Description</b></label>
+         <textarea rows="3" cols="37" id="description" name="description" style="width: 308px; margin-bottom:10px;" required></textarea>
+         <!--<div style="display: flex;align-items: center; padding: 2px;">
+            <div class="col-md-6">
+                <div class="msg">{{ msg }}</div>
+            </div>
+            <div class="col-md-6">-->
+                <button class="main-btn" type="submit">Submit</button>
+            <!--</div>-->
+        </div>
+      </form>
+    </div>
+</div>
+<script>
+ var modal = document.getElementById('id01');
+ window.onclick = function(event) {
+     if (event.target == modal) {
+         modal.style.display = "none";
+     }
+ }
+</script>
+{% endblock %}

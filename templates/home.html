@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Home Page</h2>
+
+<p>Welcome back, {{ username }}!</p>
+<br>
+<p>To launch a successful book marketing campaign requires research, comprehensive planning, and timely execution. This self-marketing book program has the required expertise and professionalism to plan your strategical wording and images based on those who have previously succeeded and then execute marketing campaigns with perfection. The result of each book promotion service is tailored to your ideas and your need.<br>By learning from those who bring authors to the Bestselling list, how they approach the readers, you can succeed.</p>
+
+
+
+ <div class="main presentation">
+       
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-9 col-md-offset-1">
+                       <h2 class="text-center">How To Navigate Through This Program.</h2>
+                   </div>
+               </div>
+                <div class="space-50"></div>
+                <div class="row">
+                    <div class="col-md-5">
+                     <br> Let us start with a quick overview of the user interface. <br>As we look at Figure 1, to the right, we see the following:<br>
+		  <ol>
+  <li>SideBar</li>
+  <li>Navigation Buttons</li>
+  <li>Destination Page</li>
+  <li>About Button</li>
+  <li>Preferences Button</li>
+ <li>Logout Button</li>
+</ol>
+			                  </div>
+            
+	   <div class="col-md-5 col-md-offset">
+<br> 
+<p align="center">Figure 1</p>
+                     <img src="{{url_for('static', filename='images/ui.png')}}" style="width: 100%;">
+     
+</p>
+</div>
+
+<br>
+
+ <div class="main presentation">
+       
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-9 col-md-offset-1">
+                                       </div>
+               </div>
+                <div class="space-50"></div>
+                <div class="row">
+                    <div class="col-md-5">
+
+                     <br> Let us next take a quick overview of the user preferences. <br>As we look at Figure 2, to the right, we see the following:<br>
+		  <ol>
+  <li>Preference Button</li>
+  <li>Light-Dark Theme Slider</li>
+  <li>SideBar Button Color Selector</li>
+  <li>SideBar Button Changes After Screen Refresh</li>
+  <li>Edit Profile Button - Brings Up Screen Where You Can Change Email and Password</li>
+</ol>
+			                  </div>
+            
+	   <div class="col-md-5 col-md-offset">
+<br> 
+<p align="center">Figure 2</p>
+                     <img src="{{url_for('static', filename='images/preference.png')}}" style="width: 100%;">
+ </p>    
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+{% endblock %}

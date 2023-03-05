@@ -1,0 +1,132 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}Description ReWrite{% endblock %}
+{% block style %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/loader.css') }}">
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='assets/js/ajax.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h2>ReWrite Page</h2>
+<p>Welcome back, {{ username }}!</p>
+<p><u>Book Description:</u> Constructed by utilizing two trained libraries. This solution brakes words into phrases, then turning them into advertising and marketing text, referenced from the bestselling publications which resonate todays buyers.<br>
+<u>Blogs, News & Comments:</u> This rephrasing tool will remove duplicate content, rewrite sentences, and create readable articles. It will replaces proper synonyms, rephrases like real humans and paraphrases better than professional writers. The algorithm, in essence, is enhanced to encapsulate real words.</p>
+<div id="cont">
+  <div class="column left">
+    <div class="select-box" id="spaCyLib">
+      <label for="select-box1" class="label select-box1">
+        <span class="label-desc">Choose Keyword Library Base</span> 
+      </label>
+      <span class="dropdown-el" id="select-boc">
+        <input type="radio" name="lang" value="base" checked="checked" id="base" required="required">
+        <label for="base" style="padding: 5px;">Please select Classifier</label>
+        <input type="radio" name="lang" value="books" {% if request.form.get('lang') == 'books' %} checked="checked" {% endif %}   id="bookBt">
+        <label for="bookBt" style="padding: 5px;">Book Description</label>
+        <input type="radio" name="lang" value="news" {% if request.form.get('lang') == 'news' %} checked="checked" {% endif %}  id="newsBt">
+        <label for="newsBt" style="padding: 5px;">Blogs, News & Comments</label>
+      </span>
+    </div><br>
+    <div id="bookMode">
+      <div id="maxCount">
+        <label class="range-label" for="ngram">Max Length Of Characters</label>
+        <div >
+            <div class="range-wrap">
+              <input type="range" class="range" id="ngramCount" name="chars" min="0" max="512" value="{{ request.form['chars'] }}">
+              <output class="bubble"></output>
+              <p style="float:left;padding:0px;">0</p><p style="float:right;padding:0px;">512</p>
+            </div>
+        </div>
+      </div><br>
+      <div  id="duplicateCount">
+        <label class="range-label" for="dupli">Highest Rating For Words Changed.<br>"0" would be all words unchanged</label>
+        <div >
+            <div class="range-wrap">
+              <input type="range" class="range" id="dupValue" name="change" min="0" max="10" value="{{ request.form['change'] }}">
+              <output class="bubble"></output>
+              <p style="float:left;padding:0px;">0.00</p><p style="float:right;padding:0px;">1.00</p>
+            </div>
+        </div>
+      </div><br>
+      <div  id="duplicateCount">
+        <label class="range-label" for="ngram">Number Of Return Sentences</label>
+        <div >
+          <div class="range-wrap">
+            <input type="range" class="range" id="ngram" name="returned" min="0" max="10" value="{{ request.form['returned'] }}">
+            <output class="bubble"></output>    
+            <p style="float:left;padding:0px;">0</p><p style="float:right;padding:0px;">10</p>
+          </div>
+        </div>
+      </div><br><br>
+    </div>
+    <div id="blogMode" style="display:none;">
+      <div id="spinWriter_pg">
+        <label ><h6>Rewrite articles on sentence and paragraph level?</h6></label>
+        <div class="form-check form-switch text-start">
+          <input class="form-check-input" type="checkbox" id="id-sw-normal" name="sw-normal">
+          <label for="sw-normal" style="padding-top: 0px;">Automatically rewrite sentences</label>
+        </div>
+        <div class="form-check form-switch text-start">
+            <input class="form-check-input" type="checkbox" id="id-sw-entire" name="sw-entire">
+            <label for="sw-entire" style="padding-top: 0px;">Automatically rewrite entire paragraphs</label>
+        </div>
+        <div class="form-check form-switch text-start">
+            <input class="form-check-input" type="checkbox" id="id-sw-summary" name="sw-summary">
+            <label for="sw-summary" style="padding-top: 0px;">Automatically write new paragraphs and summaries</label>
+        </div>
+        <div class="form-check form-switch text-start">
+            <input class="form-check-input" type="checkbox" id="id-sw-phrase" name="sw-phrase">
+            <label for="sw-phrase" style="padding-top: 0px;">Automatically change the struncture of pahrases and sentences</label>
+        </div>
+      </div><br>
+      <div  id="spinWriter_mode">
+        <label ><h6>Make articles more readable, or more unique?</h6></label>
+        <div class="row">
+          <div class="col-md-1">
+            <div class="slider-vertical">
+              <input type="range" min="0" max="2" name="sw-mode" id="sw-mode"></input>
+            </div>
+          </div>
+          <div class="col-md-11">
+            <div class="slider-container">
+              <label>Most unique: use as many synonyms as possible</label>
+              <label>Recommended: use synonyms that are reliably correct</label>
+              <label>Most readable: only use synonyms that are definitely correct</label>
+            </div>
+          </div>
+        </div>
+      </div><br><br>
+    </div>
+  </div>
+  <div class="column right" id="right">
+    <h2 class="head2">Rewrite Generator</h2>
+    <label for="keywords">Enter your text in the box below - Maximum 750 characters</label>
+    <textarea name="sentence" id="keywords" cols="30" rows="10" maxlength = "750" ></textarea>
+    <input type="submit" class="submitButton" value="Submit" onclick="rewriter_submit()">
+    <input type="reset" value="Cancel" class="submitButton">
+    <button type="button" class="submitButton" onclick="document.getElementById('keywords').value = ''">Clear</button>
+    <input type="button" class="submitButton" value="Export" id="export">
+    <br>
+    <div id="loading" style="display:none;">
+      <h1 class="title">Rewriting</h1>
+      <div class="rainbow-marker-loader"></div>
+    </div>
+    <br>
+    <div><p>Rephrase Results</p></div>
+	  <div class="clipboard">
+      <textarea name="results" id="results" cols="30" rows="10"></textarea>
+      <div class="tooltip">
+        <button onclick="myFunction()" onmouseout="outFunc()">
+        <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+        <i class="fas fa-paste"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
